@@ -37,7 +37,12 @@ module, replacing the buggy built-in rtl8192cu driver:
     sudo make install
     sudo modprobe -r rtl8192cu
     sudo modprobe 8192cu
-    sudo echo "blacklist rtl8192cu" >> /etc/modprobe.d/blacklist.conf
+    echo "" | sudo tee -a /etc/modprobe.d/blacklist.conf
+    echo "# Blacklist native RealTek 8188CUs drivers" | sudo tee -a /etc/modprobe.d/blacklist.conf   
+    echo "blacklist rtl8192cu" | sudo tee -a /etc/modprobe.d/blacklist.conf   
+    echo "blacklist rtl8192c_common" | sudo tee -a /etc/modprobe.d/blacklist.conf   
+    echo "blacklist rtlwifi" | sudo tee -a /etc/modprobe.d/blacklist.conf   
+
 
 ### Hard Install ###
 
