@@ -20,6 +20,7 @@ of you can confirm that the in-tree kernel drivers work with these devices, I
 will gladly drop this repository as it isn't really fun to maintain this.
 ## WHAT IS NEW? ##
 Added support for kernel 3.10+ (3.11 working, 3.12 not tested)
+Patch source: https://github.com/archlinuxarm/PKGBUILDs/blob/81f39bc21223b072935e8e83c462f926c7b0cdf7/aur/dkms-8192cu/fix_310_proc.patch
 
 ## Install ##
 
