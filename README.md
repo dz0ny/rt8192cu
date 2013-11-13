@@ -22,8 +22,5 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 
 ###Changelog:
 1. Newest realtek driver
-2. Procfs patch for kernel => 3.10
-
-Source: https://github.com/archlinuxarm/PKGBUILDs/blob/81f39bc21223b072935e8e83c462f926c7b0cdf7/aur/dkms-8192cu/fix_310_proc.patch
-
-3. Script for easy installation
+2. Procfs patch for kernel => 3.10 (http://goo.gl/a8kgGi)
+3. 3.Script for easy installation
