@@ -22,5 +22,5 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 
 ###Changelog:
 1. Newest realtek driver
-2. Procfs patch for kernel => 3.10 (http://goo.gl/a8kgGi)
+2. Procfs patch for kernel => 3.10 (http://goo.gl/a8kgGi) --> tested on 3.11 & 3.12!
 3. 3.Script for easy installation
