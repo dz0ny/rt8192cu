@@ -21,6 +21,6 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 2. Type: sudo dkms remove -m 8192cu -v 4.0.2.9000.20130911 --all
 
 ###Changelog:
-1. Newest realtek driver
-2. Procfs patch for kernel => 3.10 (http://goo.gl/a8kgGi) --> tested on 3.11 & 3.12!
+1. Newest realtek driver: http://goo.gl/01rZCY
+2. Procfs patch for kernel => 3.10 (http://goo.gl/a8kgGi) --> tested on 3.11 - 3.13!
 3. Script for easy installation
