@@ -19,7 +19,8 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 1. Open terminal in rt8192cu_dkms
 2. Type: chmod +x remove_driver.sh
 3. Type: sudo ./remove_driver.sh
-Manual removal:
+
+###Uninstall dkms-driver manualy:
 1. Open terminal
 2. Type: sudo dkms remove -m 8192cu -v 4.0.2.9000.20130911 --all
 3. Type: sudo rm /etc/modprobe.d/blacklist-rtl-wlan-drivers.conf
