@@ -15,5 +15,10 @@ echo "blacklist rtl8192cu" | sudo tee -a /etc/modprobe.d/blacklist-rtl-wlan-driv
 echo "blacklist rtl8192c_common" | sudo tee -a /etc/modprobe.d/blacklist-rtl-wlan-drivers.conf
 echo "blacklist rtlwifi" | sudo tee -a /etc/modprobe.d/blacklist-rtl-wlan-drivers.conf
 sleep 5
-read -p "Press [Enter] to reboot your PC..." cd
-sudo reboot
+echo "Unload wlan drivers..."
+sudo rmmod rtl8192cu
+sudo rmmod rtl8192c_common
+sudo rmmod rtlwifi
+sleep 5
+echo "Load wlan drivers..."
+sudo modprobe 8192cu
