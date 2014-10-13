@@ -29,5 +29,5 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 
 ###Changelog:
 1. Newest realtek driver: http://goo.gl/01rZCY  (Name: RTL8192CU, Version: 4.0.2_9000, Release: 2013/10/29)
-2. Procfs patch for kernel --> 3.10 (http://goo.gl/a8kgGi) --> tested on 3.10 - 3.16!
+2. Procfs patch for kernel --> 3.10 (http://goo.gl/a8kgGi) --> tested on 3.10 - 3.17!
 3. Script for easy installation & removal
