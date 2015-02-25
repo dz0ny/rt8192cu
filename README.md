@@ -1,7 +1,5 @@
-###Why DKMS?
-Dkms allows to compile the driver automatically when you install a new kernel.
-
-Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
+##Info:
+Allows easy installing of patched rt8192cu driver via dkms.
 
 ###Before installation:
 - Please remove the none dkms version of this driver!
@@ -20,7 +18,7 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 2. Type: chmod +x remove_driver.sh
 3. Type: sudo ./remove_driver.sh
 
-###Uninstall dkms-driver manualy:
+###Uninstall dkms-driver manually:
 1. Open terminal
 2. Type: sudo dkms remove -m 8192cu -v 4.0.2.9000.20130911 --all
 3. Type: sudo rm /etc/modprobe.d/blacklist-rtl-wlan-drivers.conf
@@ -28,6 +26,7 @@ Source: http://en.wikipedia.org/wiki/Dynamic_Kernel_Module_Support
 5. Type: sudo modprobe rtl8192cu
 
 ###Changelog:
-1. Newest realtek driver: http://goo.gl/uw48Pv  (Name: RTL8192CU, Version: 4.0.2_9000, Release: 2013/10/29)
-2. Procfs patch for kernel --> 3.10 (http://goo.gl/a8kgGi) --> tested on 3.10 - 3.17!
-3. Script for easy installation & removal
+1. Newest realtek driver: http://goo.gl/uqkSMa (Name: RTL8192CU, Version: 4.0.2_9000, Release: 2013/10/29)
+2. Tested on debian & arch distributions
+3. Using procfs patch (http://goo.gl/a8kgGi) --> tested on 3.10 - 3.19!
+4. Script for easy installation & removal
