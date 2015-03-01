@@ -39,21 +39,21 @@
 			_module_cmd_osdep_c_ |
 			_module_rtl871x_io_c_ |
 			_module_io_osdep_c_ |
-			_module_os_intfs_c_|
-			_module_rtl871x_security_c_|
-			_module_rtl871x_eeprom_c_|
-			_module_hal_init_c_|
-			_module_hci_hal_init_c_|
-			_module_rtl871x_ioctl_c_|
-			_module_rtl871x_ioctl_set_c_|
-			_module_rtl871x_ioctl_query_c_|
-			_module_rtl871x_pwrctrl_c_|
-			_module_hci_intfs_c_|
-			_module_hci_ops_c_|
-			_module_hci_ops_os_c_|
-			_module_rtl871x_ioctl_os_c|
-			_module_rtl8712_cmd_c_|
-			_module_hal_xmit_c_|
+			_module_os_intfs_c_ |
+			_module_rtl871x_security_c_ |
+			_module_rtl871x_eeprom_c_ |
+			_module_hal_init_c_ |
+			_module_hci_hal_init_c_ |
+			_module_rtl871x_ioctl_c_ |
+			_module_rtl871x_ioctl_set_c_ |
+			_module_rtl871x_ioctl_query_c_ |
+			_module_rtl871x_pwrctrl_c_ |
+			_module_hci_intfs_c_ |
+			_module_hci_ops_c_ |
+			_module_hci_ops_os_c_ |
+			_module_rtl871x_ioctl_os_c |
+			_module_rtl8712_cmd_c_ |
+			_module_hal_xmit_c_ |
 			_module_rtl8712_recv_c_ |
 			_module_mp_ |
 			_module_efuse_;
