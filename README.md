@@ -28,5 +28,5 @@ Allows easy installing of patched rt8192cu driver via dkms.
 ###Changelog:
 1. Newest realtek driver: http://goo.gl/uqkSMa (Name: RTL8192CU, Version: 4.0.2_9000, Release: 2013/10/29)
 2. Tested on debian & arch distributions
-3. Using procfs patch (http://goo.gl/a8kgGi) --> tested on 3.10 - 3.19!
+3. Using procfs implementation from (https://github.com/kolasa/RTL8188C_8192C_USB) --> tested on kernel 3.19!
 4. Script for easy installation & removal
