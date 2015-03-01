@@ -587,6 +587,7 @@ strip:
 	$(CROSS_COMPILE)strip $(MODULE_NAME).ko --strip-unneeded
 
 install:
+	[ -d $(MODDESTDIR) ] || mkdir -p $(MODDESTDIR) 2>/dev/null
 	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
 	/sbin/depmod -a ${KVER}
 

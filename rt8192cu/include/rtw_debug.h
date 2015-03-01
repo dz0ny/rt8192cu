@@ -333,7 +333,7 @@ extern u32 GlobalDebugLevel;
 
 
 #ifdef CONFIG_PROC_DEBUG
-
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	int proc_get_drv_version(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
@@ -356,7 +356,7 @@ extern u32 GlobalDebugLevel;
 			  int *eof, void *data);
 
  	int proc_set_write_reg(struct file *file, const char *buffer,
-		unsigned long count, void *data);
+ 			   unsigned long count, void *data);
 
 	int proc_get_read_reg(char *page, char **start,
 			  off_t offset, int count,
@@ -364,7 +364,6 @@ extern u32 GlobalDebugLevel;
 
 	int proc_set_read_reg(struct file *file, const char *buffer,
 		unsigned long count, void *data);
-
 
 	int proc_get_fwstate(char *page, char **start,
 			  off_t offset, int count,
@@ -441,29 +440,71 @@ extern u32 GlobalDebugLevel;
 	int proc_get_rf_reg_dump4(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
+#else
+	int proc_get_drv_version(struct seq_file *m, void *data);
+
+	int proc_get_write_reg(struct seq_file *m, void *data);
+
+ 	ssize_t proc_set_write_reg(struct file *file, const char *buffer,
+			 size_t count, loff_t *pos);
+
+	int proc_get_read_reg(struct seq_file *m, void *data);
+
+	ssize_t proc_set_read_reg(struct file *file, const char *buffer,
+			 size_t count, loff_t *pos);
+
+	int proc_get_fwstate(struct seq_file *m, void *data);
+
+	int proc_get_sec_info(struct seq_file *m, void *data);
+
+	int proc_get_mlmext_state(struct seq_file *m, void *data);
+
+	int proc_get_qos_option(struct seq_file *m, void *data);
+
+	int proc_get_ht_option(struct seq_file *m, void *data);
+
+	int proc_get_rf_info(struct seq_file *m, void *data);
+
+	int proc_get_ap_info(struct seq_file *m, void *data);
+
+	int proc_get_adapter_state(struct seq_file *m, void *data);
+
+	int proc_get_trx_info(struct seq_file *m, void *data);
+#endif
 
 #ifdef CONFIG_AP_MODE
-
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	int proc_get_all_sta_info(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
-
+#else
+	int proc_get_all_sta_info(struct seq_file *m, void *data);
+#endif
 #endif
 
 #ifdef DBG_MEMORY_LEAK
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	int proc_get_malloc_cnt(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
+#else
+	int proc_get_malloc_cnt(struct seq_file *m, void *data);
+#endif
 #endif
 
 #ifdef CONFIG_FIND_BEST_CHANNEL
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	int proc_get_best_channel(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
+#else
+	int proc_get_best_channel(struct seq_file *m, void *data);
+#endif
 	int proc_set_best_channel(struct file *file, const char *buffer,
 		unsigned long count, void *data);
 #endif
 
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	int proc_get_rx_signal(char *page, char **start,
 			  off_t offset, int count,
 			  int *eof, void *data);
@@ -518,6 +559,22 @@ extern u32 GlobalDebugLevel;
 
 	int proc_set_rssi_disp(struct file *file, const char *buffer,
 		unsigned long count, void *data);
+#else
+	int proc_get_rx_signal(struct seq_file *m, void *data);
+
+	ssize_t proc_set_rx_signal(struct file *file, const char *buffer,
+				size_t count, loff_t *pos);
+
+	int proc_get_ampdu_enable(struct seq_file *m, void *data);
+			  
+	ssize_t proc_set_ampdu_enable(struct file *file, const char *buffer,
+				size_t count, loff_t *pos);
+
+	int proc_get_rssi_disp(struct seq_file *m, void *data);
+
+	ssize_t proc_set_rssi_disp(struct file *file, const char *buffer,
+				size_t count, loff_t *pos);
+#endif
 
 #if defined(DBG_CONFIG_ERROR_DETECT)
 int proc_get_sreset(char *page, char **start, off_t offset, int count, int *eof, void *data);
