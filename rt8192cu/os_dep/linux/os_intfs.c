@@ -497,7 +497,8 @@ static const struct file_operations proc_get_best_channel_fops = {
 };
 #endif
 
-/* TODO Not fully implementet in rtw_debug.c rtw_debug.h
+/* TODO Not fully implementet in rtw_debug.c, rtw_debug.h, enable in autoconf.h*/
+#ifdef FULLPROCSUPPORT
 static int proc_get_log_level_open(struct inode *inode, struct file *file){
         return single_open(file, proc_get_log_level, PDE_DATA(inode));
 }
@@ -752,7 +753,7 @@ static const struct file_operations proc_get_dm_adaptivity_fops = {
 		   .release = seq_release,
 };
 #endif /* CONFIG_DM_ADAPTIVITY */
-*/
+#endif /* FULLPROCSUPPORT */
 #endif
 
 #define RTW_PROC_NAME DRV_NAME
@@ -787,14 +788,12 @@ void rtw_proc_init_one(struct net_device *dev)
 		}
 
 		#if(LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24))
-		rtw_proc=create_proc_entry(rtw_proc_name, S_IFDIR, proc_net);
-		#else
-		#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
- 		rtw_proc=create_proc_entry(rtw_proc_name, S_IFDIR, init_net.proc_net);
+		rtw_proc = create_proc_entry(rtw_proc_name, S_IFDIR, proc_net);
+		#elif LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
+ 		rtw_proc = create_proc_entry(rtw_proc_name, S_IFDIR, init_net.proc_net);
  		#else
- 		rtw_proc=proc_mkdir(rtw_proc_name, init_net.proc_net);
+ 		rtw_proc = proc_mkdir(rtw_proc_name, init_net.proc_net);
  		#endif
-		#endif
 		if (rtw_proc == NULL) {
 			DBG_871X(KERN_ERR "Unable to create rtw_proc directory\n");
 			return;
@@ -815,9 +814,11 @@ void rtw_proc_init_one(struct net_device *dev)
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 		entry = create_proc_read_entry("log_level", S_IFREG | S_IRUGO,
 				   rtw_proc, proc_get_log_level, dev);
+		#ifdef FULLPROCSUPPORT
 		#else
 		entry = proc_create_data("log_level", S_IFREG | S_IRUGO,
 				   rtw_proc, proc_get_log_level, dev); //TODO
+		#endif
 		#endif
 		if (!entry) {
 			DBG_871X("Unable to create_proc_read_entry!\n");
@@ -831,9 +832,11 @@ void rtw_proc_init_one(struct net_device *dev)
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 		entry = create_proc_read_entry("mstat", S_IFREG | S_IRUGO,
 				   rtw_proc, proc_get_mstat, dev);
+		#ifdef FULLPROCSUPPORT
 		#else
 		entry = proc_create_data("mstat", S_IFREG | S_IRUGO,
 				   rtw_proc, proc_get_mstat, dev); //TODO
+		#endif
 		#endif
 		if (!entry) {
 			DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1018,9 +1021,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("mac_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump1, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("mac_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump1, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1030,9 +1035,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("mac_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump2, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("mac_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump2, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1042,9 +1049,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("mac_reg_dump3", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump3, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("mac_reg_dump3", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_mac_reg_dump3, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1054,9 +1063,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("bb_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump1, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("bb_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump1, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1066,9 +1077,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("bb_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump2, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("bb_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump2, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1078,9 +1091,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("bb_reg_dump3", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump3, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("bb_reg_dump3", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_bb_reg_dump3, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1090,9 +1105,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("rf_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rf_reg_dump1, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("rf_reg_dump1", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rf_reg_dump1, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1102,9 +1119,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("rf_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rf_reg_dump2, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("rf_reg_dump2", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rf_reg_dump2, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1116,9 +1135,11 @@ void rtw_proc_init_one(struct net_device *dev)
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 		entry = create_proc_read_entry("rf_reg_dump3", S_IFREG | S_IRUGO,
 					   dir_dev, proc_get_rf_reg_dump3, dev); 
+		#ifdef FULLPROCSUPPORT
 		#else
 		entry = proc_create_data("rf_reg_dump3", S_IFREG | S_IRUGO,
 					   dir_dev, proc_get_rf_reg_dump3, dev); //TODO
+		#endif
 		#endif
 		if (!entry) {
 			DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1128,9 +1149,11 @@ void rtw_proc_init_one(struct net_device *dev)
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 		entry = create_proc_read_entry("rf_reg_dump4", S_IFREG | S_IRUGO,
 					   dir_dev, proc_get_rf_reg_dump4, dev);
+		#ifdef FULLPROCSUPPORT
 		#else
 		entry = proc_create_data("rf_reg_dump4", S_IFREG | S_IRUGO,
 					   dir_dev, proc_get_rf_reg_dump4, dev); //TODO
+		#endif
 		#endif
 		if (!entry) {
 			DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1201,9 +1224,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("ht_enable", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_ht_enable, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("ht_enable", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_ht_enable, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1216,9 +1241,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("cbw40_enable", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_cbw40_enable, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("cbw40_enable", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_cbw40_enable, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1246,9 +1273,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("rx_stbc", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rx_stbc, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("rx_stbc", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_rx_stbc, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1264,12 +1293,14 @@ void rtw_proc_init_one(struct net_device *dev)
 
 	entry = create_proc_read_entry("vid", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_vid, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("path_rssi", S_IFREG | S_IRUGO,
 					dir_dev, proc_get_two_path_rssi, dev); //TODO
 
 	entry = proc_create_data("vid", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_vid, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1279,9 +1310,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("pid", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_pid, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("pid", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_pid, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1307,9 +1340,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("sreset", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_sreset, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("sreset", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_sreset, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1324,9 +1359,11 @@ void rtw_proc_init_one(struct net_device *dev)
 	#if LINUX_VERSION_CODE < KERNEL_VERSION(3,10,0)
 	entry = create_proc_read_entry("dm_adaptivity", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_dm_adaptivity, dev);
+	#ifdef FULLPROCSUPPORT
 	#else
 	entry = proc_create_data("dm_adaptivity", S_IFREG | S_IRUGO,
 				   dir_dev, proc_get_dm_adaptivity, dev); //TODO
+	#endif
 	#endif
 	if (!entry) {
 		DBG_871X("Unable to create_proc_read_entry!\n");
@@ -1694,11 +1731,11 @@ int rtw_init_netdev_name(struct net_device *pnetdev, const char *ifname)
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,24))
 		TargetNetdev = dev_get_by_name("wlan0");
 #else
-	#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,26))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2,6,26))
 		devnet = pnetdev->nd_net;
-	#else
+#else
 		devnet = dev_net(pnetdev);
-	#endif
+#endif
 		TargetNetdev = dev_get_by_name(devnet, "wlan0");
 #endif
 		if(TargetNetdev) {
@@ -1800,10 +1837,9 @@ void rtw_unregister_netdevs(struct dvobj_priv *dvobj)
 	int i;
 	_adapter *padapter = NULL;
 
-	for (i=0;i<dvobj->iface_nums;i++)
+	for (i = 0; i < dvobj->iface_nums; i++)
 	{
 		struct net_device *pnetdev = NULL;
-
 		padapter = dvobj->padapters[i];
 
 		if (padapter == NULL)
@@ -2000,19 +2036,16 @@ u8 rtw_reset_drv_sw(_adapter *padapter)
 	padapter->bWritePortCancel = _FALSE;
 	padapter->bRxRSSIDisplay = 0;
 	pmlmepriv->scan_interval = SCAN_INTERVAL; // 30*2 sec = 60sec
-
 	pwrctrlpriv->bips_processing = _FALSE;
 	pwrctrlpriv->rf_pwrstate = rf_on;
-
 	padapter->xmitpriv.tx_pkts = 0;
 	padapter->recvpriv.rx_pkts = 0;
-
 	pmlmepriv->LinkDetectInfo.bBusyTraffic = _FALSE;
 
 	_clr_fwstate_(pmlmepriv, _FW_UNDER_SURVEY |_FW_UNDER_LINKING);
 
 #ifdef CONFIG_AUTOSUSPEND
-	#if (LINUX_VERSION_CODE>=KERNEL_VERSION(2,6,22) && LINUX_VERSION_CODE<=KERNEL_VERSION(2,6,34))
+	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,22) && LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,34))
 		adapter_to_dvobj(padapter)->pusbdev->autosuspend_disabled = 1;//autosuspend disabled by the user
 	#endif
 #endif
