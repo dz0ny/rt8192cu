@@ -72,7 +72,7 @@ typedef struct RF_Shadow_Compare_Map {
 /*------------------------Define local variable------------------------------*/
 // 2008/11/20 MH For Debug only, RF
 //static	RF_SHADOW_T	RF_Shadow[RF6052_MAX_PATH][RF6052_MAX_REG] = {0};
-static	RF_SHADOW_T	RF_Shadow[RF6052_MAX_PATH][RF6052_MAX_REG];
+static	RF_SHADOW_T	RF_Shadow[RF6052_MAX_PATH][RF6052_MAX_REG+1];
 /*------------------------Define local variable------------------------------*/
 
 
