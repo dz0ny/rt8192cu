@@ -1,33 +1,28 @@
 EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
-EXTRA_CFLAGS += -O1
-#EXTRA_CFLAGS += -O3
+#EXTRA_CFLAGS += -O1
+#EXTRA_CFLAGS += -O2
+EXTRA_CFLAGS += -O3
 #EXTRA_CFLAGS += -Wall
 #EXTRA_CFLAGS += -Wextra
 #EXTRA_CFLAGS += -Werror
 #EXTRA_CFLAGS += -pedantic
 #EXTRA_CFLAGS += -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
-
 EXTRA_CFLAGS += -Wno-unused-variable
 EXTRA_CFLAGS += -Wno-unused-value
 EXTRA_CFLAGS += -Wno-unused-label
 EXTRA_CFLAGS += -Wno-unused-parameter
 EXTRA_CFLAGS += -Wno-unused-function
 EXTRA_CFLAGS += -Wno-unused
-
 EXTRA_CFLAGS += -Wno-uninitialized
-
 EXTRA_CFLAGS += -I$(src)/include
 
 CONFIG_AUTOCFG_CP = n
-
 CONFIG_RTL8192C = y
 CONFIG_RTL8192D = n
 CONFIG_RTL8723A = n
-
 CONFIG_USB_HCI = y
 CONFIG_PCI_HCI = n
 CONFIG_SDIO_HCI = n
-
 CONFIG_MP_INCLUDED = n
 CONFIG_POWER_SAVING = y
 CONFIG_USB_AUTOSUSPEND = n
@@ -37,7 +32,6 @@ CONFIG_BT_COEXISTENCE = n
 CONFIG_RTL8192CU_REDEFINE_1X1 = n
 CONFIG_INTEL_WIDI = n
 CONFIG_WAKE_ON_WLAN = n
-
 CONFIG_PLATFORM_I386_PC = y
 CONFIG_PLATFORM_TI_AM3517 = n
 CONFIG_PLATFORM_ANDROID_X86 = n
@@ -70,11 +64,9 @@ CONFIG_PLATFORM_MSTAR_TITANIA12 = n
 CONFIG_PLATFORM_MSTAR_A3 = n
 CONFIG_PLATFORM_ARM_SUNxI = n
 CONFIG_PLATFORM_ARM_SUN6I = n
-
 CONFIG_DRVEXT_MODULE = n
 
 export TopDIR ?= $(shell pwd)
-
 
 ifeq ($(CONFIG_RTL8192C), y)
 
@@ -595,6 +587,26 @@ uninstall:
 	rm -f $(MODDESTDIR)/$(MODULE_NAME).ko
 	/sbin/depmod -a ${KVER}
 
+install_dkms:
+	mkdir /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911 -p
+	cp . /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911 -a
+	rm /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911/README.md
+	rm /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911/ReleaseNotes.pdf
+	rm -rf /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911/.git
+	dkms add -m $(MODULE_NAME) -v 4.0.2.9000.20130911
+	dkms build -m $(MODULE_NAME) -v 4.0.2.9000.20130911
+	dkms install -m $(MODULE_NAME) -v 4.0.2.9000.20130911
+	touch /etc/modprobe.d/blacklist-rtl-wlan-driver.conf
+	echo "blacklist rtl8192cu" | sudo tee -a /etc/modprobe.d/blacklist-rtl-wlan-driver.conf
+	rmmod rtl8192cu
+	modprobe $(MODULE_NAME)
+
+uninstall_dkms:
+	dkms remove -m $(MODULE_NAME) -v 4.0.2.9000.20130911 --all
+	rm -rd /usr/src/$(MODULE_NAME)-4.0.2.9000.20130911
+	rm /etc/modprobe.d/blacklist-rtl-wlan-driver.conf
+	rmmod $(MODULE_NAME)
+	modprobe rtl8192cu
 
 config_r:
 	@echo "make config"
