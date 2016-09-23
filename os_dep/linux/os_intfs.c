@@ -52,6 +52,21 @@ MODULE_DESCRIPTION("Realtek Wireless Lan Driver");
 MODULE_AUTHOR("Realtek Semiconductor Corp.");
 MODULE_VERSION(DRIVERVERSION);
 
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,0))
+#define RT_MOD_INC_USE_COUNT() \
+	if (!try_module_get(THIS_MODULE)) \
+	{ \
+		DBG_871X("%s: cannot reserve module\n", __FUNCTION__); \
+		return -1; \
+	}
+
+#define RT_MOD_DEC_USE_COUNT() module_put(THIS_MODULE);
+#else
+#define RT_MOD_INC_USE_COUNT()	MOD_INC_USE_COUNT;
+#define RT_MOD_DEC_USE_COUNT() MOD_DEC_USE_COUNT;
+#endif
+
 /* module param defaults */
 int rtw_chip_version = 0x00;
 int rtw_rfintfs = HWPI;
@@ -2494,6 +2509,7 @@ int _netdev_open(struct net_device *pnetdev)
 			goto netdev_open_error;
 		}
 
+
 #ifdef CONFIG_DRVEXT_MODULE
 		init_drvext(padapter);
 #endif
@@ -2533,6 +2549,7 @@ int _netdev_open(struct net_device *pnetdev)
 #endif	// CONFIG_BR_EXT
 
 netdev_open_normal_process:
+        RT_MOD_INC_USE_COUNT();
 
 	#ifdef CONFIG_CONCURRENT_MODE
 	{
@@ -2750,6 +2767,8 @@ static int netdev_close(struct net_device *pnetdev)
 
 	RT_TRACE(_module_os_intfs_c_,_drv_info_,("-871x_drv - drv_close\n"));
 	DBG_871X("-871x_drv - drv_close, bup=%d\n", padapter->bup);
+
+        RT_MOD_DEC_USE_COUNT();
 
 	return 0;
 }
